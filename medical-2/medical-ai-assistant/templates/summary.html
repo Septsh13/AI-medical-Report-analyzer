@@ -1,0 +1,42 @@
+<h2>🧬 AI Medical Report Analyzer</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <label><strong>Upload Medical Report (PDF/Image):</strong></label><br>
+    <input type="file" name="file" required><br><br>
+
+    <label><strong>Select AI Mode:</strong></label><br>
+    <input type="radio" name="model" value="spacy" checked> SpaCy NLP<br>
+    <input type="radio" name="model" value="ollama"> Ollama LLM<br><br>
+
+    <input type="submit" value="Analyze">
+</form>
+
+{% if extracted_text %}
+    <h3>📄 Extracted Text:</h3>
+    <pre>{{ extracted_text }}</pre>
+{% endif %}
+
+{% if summary %}
+    <h3>🧠 AI Summary:</h3>
+    <pre>{{ summary }}</pre>
+{% endif %}
+
+{% if data %}
+    <div class="patient-details">
+        <h3>🩺 Patient Info:</h3>
+        <ul>
+            <li><strong>Name:</strong> {{ data["Patient Name"] }}</li>
+            <li><strong>Age:</strong> {{ data["Age"] }}</li>
+            <li><strong>Doctor:</strong> {{ data["Doctor Name"] }}</li>
+            <li><strong>Hospital:</strong> {{ data["Hospital"] }}</li>
+        </ul>
+    </div>
+{% endif %}
+
+{% if json_file and csv_file %}
+    <h3>📁 Export:</h3>
+    <div class="export-links">
+        <a href="{{ json_file }}" download>⬇️ Download JSON</a>
+        <a href="{{ csv_file }}" download>⬇️ Download CSV</a>
+    </div>
+{% endif %}
